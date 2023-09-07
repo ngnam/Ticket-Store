@@ -16,7 +16,7 @@ namespace FileUploadControl
         public async void UploadFile(IFormFile file, string folder)
         {
             string fileName = file.FileName.Trim('"');
-            byte[] buffer = new byte[16 * 1024];
+            byte[] buffer = new byte[16 << 10]; //16 * 1024 = 16KB
             using (FileStream output = System.IO.File.Create(this.GetPathAndFileName(folder, fileName)))
             {
                 using (Stream input = file.OpenReadStream()) 

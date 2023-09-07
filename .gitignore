@@ -11,3 +11,7 @@ bld/
 
 # Visual Studio 2017 cache/options directory
 .vs/
+
+# user Secrets.json
+secrets.json
+*.user
