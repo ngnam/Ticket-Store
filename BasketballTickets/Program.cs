@@ -26,7 +26,9 @@ namespace BasketballTickets
                {
                    var env = hostingContext.HostingEnvironment;
 
-                   config
+                   if (env.IsDevelopment())
+                   {
+                       config
                         .SetBasePath(env.ContentRootPath)
                         .AddJsonFile("appsettings.json", true, true)
                         .AddJsonFile($"appsettings.Development.json", true, true)
@@ -35,6 +37,17 @@ namespace BasketballTickets
                         //.AddUserSecrets(Assembly.GetExecutingAssembly(), true)
                         .AddEnvironmentVariables()
                         .Build();
+                   }
+                   else
+                   {
+                       config
+                        .SetBasePath(env.ContentRootPath)
+                        .AddJsonFile("appsettings.json", true, true)
+                        .AddJsonFile($"appsettings.Development.json", true, true)
+                        .AddJsonFile($"appsettings.{Environment.UserName}.json", true, true)
+                        .AddEnvironmentVariables()
+                        .Build();
+                   }
 
                })
                .UseStartup<Startup>();
