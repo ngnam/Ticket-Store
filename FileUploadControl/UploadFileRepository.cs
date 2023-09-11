@@ -6,9 +6,9 @@ namespace FileUploadControl
 {
     public class UploadFileRepository : IUploadableFile
     {
-        private IHostingEnvironment hostingEnvironment;
+        private IWebHostEnvironment hostingEnvironment;
 
-        public UploadFileRepository(IHostingEnvironment hostingEnvironment)
+        public UploadFileRepository(IWebHostEnvironment hostingEnvironment)
         {
             this.hostingEnvironment = hostingEnvironment;
         }
@@ -19,7 +19,7 @@ namespace FileUploadControl
             byte[] buffer = new byte[16 << 10]; //16 * 1024 = 16KB
             using (FileStream output = System.IO.File.Create(this.GetPathAndFileName(folder, fileName)))
             {
-                using (Stream input = file.OpenReadStream()) 
+                using (Stream input = file.OpenReadStream())
                 {
                     int readBytes;
                     while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)

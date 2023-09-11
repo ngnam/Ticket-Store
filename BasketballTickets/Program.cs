@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using System;
 
 namespace BasketballTickets
 {
@@ -21,12 +16,12 @@ namespace BasketballTickets
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             //https://dotnetcoretutorials.com/using-user-secrets-configuration-in-net/?expand_article=1
-            return WebHost.CreateDefaultBuilder(args)
+            return WebHost.CreateDefaultBuilder(args)              
                .ConfigureAppConfiguration((hostingContext, config) =>
                {
                    var env = hostingContext.HostingEnvironment;
 
-                   if (env.IsDevelopment())
+                   if (env.IsDevelopment()) //IsDevelopment
                    {
                        config
                         .SetBasePath(env.ContentRootPath)
@@ -48,7 +43,6 @@ namespace BasketballTickets
                         .AddEnvironmentVariables()
                         .Build();
                    }
-
                })
                .UseStartup<Startup>();
 
