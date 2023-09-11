@@ -1,5 +1,3 @@
-using System;
-
 namespace BasketballTickets.Models
 {
     public class ErrorViewModel

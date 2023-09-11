@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BasketballTickets.Data;
+using BasketballTickets.Models;
+using FileUploadControl;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BasketballTickets.Data;
-using BasketballTickets.Models;
-using Microsoft.AspNetCore.Authorization;
-using FileUploadControl;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BasketballTickets.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class TeamsController : BaseController 
+    public class TeamsController : BaseController
     {
         private readonly IUploadableFile _upload;
         private readonly String teamsFolder;
@@ -119,7 +118,8 @@ namespace BasketballTickets.Controllers
                     {
                         team.LogoPath = "~/uploads/" + teamsFolder + "/" + file.FileName.Trim();
                         _upload.UploadFile(file, teamsFolder);
-                    } else
+                    }
+                    else
                     {
                         team.LogoPath = _context.Teams.AsNoTracking().Where(t => t.Id == team.Id).First().LogoPath;
                     }

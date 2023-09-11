@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BasketballTickets.Data;
+﻿using BasketballTickets.Data;
 using BasketballTickets.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BasketballTickets.Controllers
 {
@@ -19,7 +18,7 @@ namespace BasketballTickets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody]int ticketId)
+        public async Task<IActionResult> Add([FromBody] int ticketId)
         {
             Ticket ticket = _context.Tickets.Where(t => t.Id == ticketId).SingleOrDefault();
             if (ticket == null || ticket.ShoppingCartId != null)
@@ -33,7 +32,8 @@ namespace BasketballTickets.Controllers
             {
                 shoppingCart = new ShoppingCart { Tickets = new List<Ticket>() { ticket }, User = user };
                 _context.ShoppingCarts.Add(shoppingCart);
-            } else
+            }
+            else
             {
                 shoppingCart = _context.ShoppingCarts.Include(sc => sc.Tickets).Where(sc => sc.UserId == user.Id).SingleOrDefault();
                 if (!shoppingCart.Tickets.Any(t => t.Id == ticketId))
@@ -48,7 +48,7 @@ namespace BasketballTickets.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Remove([FromBody]int ticketId)
+        public async Task<IActionResult> Remove([FromBody] int ticketId)
         {
             Ticket ticket = _context.Tickets.Include(t => t.ShoppingCart).Where(t => t.Id == ticketId).SingleOrDefault();
             if (ticket == null || ticket.ShoppingCartId == null)

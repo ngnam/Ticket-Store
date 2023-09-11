@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BasketballTickets.Data;
+using BasketballTickets.Models;
+using BasketballTickets.Models.ViewModels;
+using BasketballTickets.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BasketballTickets.Data;
-using BasketballTickets.Models;
-using Microsoft.AspNetCore.Authorization;
-using BasketballTickets.Services;
-using BasketballTickets.Models.ViewModels;
-using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BasketballTickets.Controllers
 {
@@ -55,9 +55,9 @@ namespace BasketballTickets.Controllers
         {
             var gameTypes = _context.GameTypes.OrderBy(g => g.Order).ToList();
             List<CategorizedGamesViewModel> categorizedGames = new List<CategorizedGamesViewModel>();
-            foreach(var gameType in gameTypes)
+            foreach (var gameType in gameTypes)
             {
-               if (gameTypeId != null)
+                if (gameTypeId != null)
                 {
                     if (gameType.Id == gameTypeId)
                     {
@@ -66,23 +66,6 @@ namespace BasketballTickets.Controllers
                             {
                                 GamesType = gameType.Name,
                                 Games = games.Where(g => g.GameTypeId == gameType.Id).Select(g => new GameViewModel
-                                    {
-                                        Game = g,
-                                        DayOfWeek = DateService.GetDayOfWeek(g.Date),
-                                        DayOfMonth = DateService.GetDayOfMonth(g.Date),
-                                        TimeOfDay = DateService.GetTimeOfDay(g.Date),
-                                        Venue = _context.Arenas.Where(a => a.Id == g.HomeTeam.ArenaId).First().Name
-                                    }).ToList()
-                            });
-                        break;
-                    }
-                } else
-                {
-                    categorizedGames.Add(
-                        new CategorizedGamesViewModel
-                        {
-                            GamesType = gameType.Name,
-                            Games = games.Where(g => g.GameTypeId == gameType.Id).Select(g => new GameViewModel
                                 {
                                     Game = g,
                                     DayOfWeek = DateService.GetDayOfWeek(g.Date),
@@ -90,6 +73,24 @@ namespace BasketballTickets.Controllers
                                     TimeOfDay = DateService.GetTimeOfDay(g.Date),
                                     Venue = _context.Arenas.Where(a => a.Id == g.HomeTeam.ArenaId).First().Name
                                 }).ToList()
+                            });
+                        break;
+                    }
+                }
+                else
+                {
+                    categorizedGames.Add(
+                        new CategorizedGamesViewModel
+                        {
+                            GamesType = gameType.Name,
+                            Games = games.Where(g => g.GameTypeId == gameType.Id).Select(g => new GameViewModel
+                            {
+                                Game = g,
+                                DayOfWeek = DateService.GetDayOfWeek(g.Date),
+                                DayOfMonth = DateService.GetDayOfMonth(g.Date),
+                                TimeOfDay = DateService.GetTimeOfDay(g.Date),
+                                Venue = _context.Arenas.Where(a => a.Id == g.HomeTeam.ArenaId).First().Name
+                            }).ToList()
                         });
                 }
             }

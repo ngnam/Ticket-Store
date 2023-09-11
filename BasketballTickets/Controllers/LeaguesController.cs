@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BasketballTickets.Data;
+﻿using BasketballTickets.Data;
 using BasketballTickets.Models;
-using Microsoft.AspNetCore.Authorization;
 using FileUploadControl;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BasketballTickets.Controllers
 {
@@ -110,7 +108,8 @@ namespace BasketballTickets.Controllers
                     {
                         league.LogoPath = "~/uploads/" + logoFolder + "/" + file.FileName.Trim();
                         _upload.UploadFile(file, logoFolder);
-                    } else
+                    }
+                    else
                     {
                         league.LogoPath = _context.Leagues.AsNoTracking().Where(l => l.Id == league.Id).First().LogoPath;
                     }

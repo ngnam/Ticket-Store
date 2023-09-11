@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,7 +38,8 @@ namespace BasketballTickets.Controllers
                 ViewData["CartQuantity"] = tickets.Count;
                 ViewData["ShoppingCart"] = tickets;
                 ViewData["TotalCartPrice"] = tickets.Sum(t => t.Price);
-            } else
+            }
+            else
             {
                 ViewData["ShoppingCart"] = new List<Ticket>();
             }

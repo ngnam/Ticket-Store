@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BasketballTickets.Data;
+using BasketballTickets.Models;
+using BasketballTickets.Models.ViewModels;
+using BasketballTickets.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BasketballTickets.Data;
-using BasketballTickets.Models;
-using Microsoft.AspNetCore.Authorization;
-using BasketballTickets.Services;
-using BasketballTickets.Models.ViewModels;
-using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BasketballTickets.Controllers
 {
@@ -89,7 +88,9 @@ namespace BasketballTickets.Controllers
                 if (ticket.ShoppingCartId == null)
                 {
                     viewModel.AvailableTickets.Add(ticket);
-                } else if (ticket.ShoppingCart.UserId == user.Id) {
+                }
+                else if (ticket.ShoppingCart.UserId == user.Id)
+                {
                     viewModel.BookedTickets.Add(ticket);
                 }
             }
@@ -126,7 +127,7 @@ namespace BasketballTickets.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            var  games = _context.Games.OrderBy(g => g.Date).Include(g => g.HomeTeam).Include(g => g.AwayTeam).ToList();
+            var games = _context.Games.OrderBy(g => g.Date).Include(g => g.HomeTeam).Include(g => g.AwayTeam).ToList();
             List<object> formattedGames = new List<object>();
             foreach (var game in games)
             {

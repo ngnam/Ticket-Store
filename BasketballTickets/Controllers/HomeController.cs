@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BasketballTickets.Data;
+using BasketballTickets.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using BasketballTickets.Models;
-using BasketballTickets.Data;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Identity;
 
 namespace BasketballTickets.Controllers
 {
@@ -24,7 +21,7 @@ namespace BasketballTickets.Controllers
             IQueryable<Team> teams = _context.Teams;
             if (leagueId != null)
             {
-                teams = teams.Where(t => t.LeagueId == leagueId); 
+                teams = teams.Where(t => t.LeagueId == leagueId);
             }
 
             var teamsFilter = teams.Select(t => new

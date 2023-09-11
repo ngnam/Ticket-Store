@@ -16,7 +16,7 @@ namespace BasketballTickets
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             //https://dotnetcoretutorials.com/using-user-secrets-configuration-in-net/?expand_article=1
-            return WebHost.CreateDefaultBuilder(args)              
+            return WebHost.CreateDefaultBuilder(args)
                .ConfigureAppConfiguration((hostingContext, config) =>
                {
                    var env = hostingContext.HostingEnvironment;
